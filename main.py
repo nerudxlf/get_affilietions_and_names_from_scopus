@@ -6,7 +6,12 @@ def get_name(split_list: list) -> str:
 
 
 def get_university(split_list: list) -> str:
-    return split_list[2]
+    devel = "Development"
+    dep = "Department"
+    lab = "Laboratory"
+    if split_list[2].find(devel) == -1 and split_list[2].find(dep) == -1 and split_list[2].find(lab) == -1:
+        return split_list[2]
+    return split_list[3]
 
 
 def get_country(split_list: list) -> str:
@@ -14,16 +19,19 @@ def get_country(split_list: list) -> str:
 
 
 def main():
-    scopus_data = pd.read_csv("scopus_data.csv")['Авторы организаций']
-    scopus_data_to_list = scopus_data.to_list()
     scopus_data_to_list_split = []
     name_list = []
     university_list = []
     country_list = []
+    scopus_data = pd.read_csv("scopus_data.csv")['Авторы организаций']
+    scopus_data_to_list = scopus_data.to_list()
+
     for elem in scopus_data_to_list:
         for item in elem.split("; "):
             scopus_data_to_list_split.append(item)
         scopus_data_to_list_split.append("")
+    for i in scopus_data_to_list_split:
+        print(i)
     for elem in scopus_data_to_list_split:
         elem_split = elem.split(', ')
         if len(elem_split) == 1:
